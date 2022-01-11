@@ -116,17 +116,17 @@ function setBead(row,col) {
 }
 
 function loadJson() {
+  $.getJSON("http://localhost:9000/json", function (data){
 
-
-    console.log('DATA:',gridJson)
+    console.log('DATA:',data)
     grid = new Grd(grid.length,grid.width,grid.stitch)
-    grid.fill()
+    grid.fill(gridJson.temp.beads)
     updateGrid(grid);
     console.log('GRID',grid);
     registerClickListener();
 
     return grid
-
+  })
 }
 
 loadJson()
