@@ -4,12 +4,12 @@
       <q-header elevated class="$primary" >
         <q-toolbar class="text-black">
           <q-btn flat round dense @click="leftDrawer = !leftDrawer" icon="menu" class="q-mr-sm" />
-          <q-toolbar-title>
-            <strong>HTWG</strong> Beads
-            <q-avatar>
-              <img src="../assets/beads3.png">
-            </q-avatar>
-          </q-toolbar-title>
+<!--          <q-toolbar-title>-->
+<!--            <strong>HTWG</strong> Beads-->
+<!--            <q-avatar>-->
+<!--              <img src="../assets/beads3.png">-->
+<!--            </q-avatar>-->
+<!--          </q-toolbar-title>-->
 
           <q-space ></q-space><q-tabs v-model="tab" shrink>
           <q-route-tab name="tab1" label="Home"  to="/"/>
@@ -18,7 +18,14 @@
         </q-tabs>
 
         </q-toolbar>
-        <q-toolbar inset class="text-black">
+        <q-toolbar class="text-black">
+          <q-toolbar-title class="q-ml-sm">
+
+            <strong>HTWG</strong> Beads
+            <q-avatar>
+              <img src="../assets/beads3.png">
+            </q-avatar>
+          </q-toolbar-title>
           <q-space />
           <q-btn flat round dense icon="file_download" class="material-icons" />
           <q-btn flat round dense icon="add" class="material-icons" />

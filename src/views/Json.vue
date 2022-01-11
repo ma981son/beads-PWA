@@ -6,18 +6,17 @@
     <div class="q-pa-md row items-start q-gutter-sm no-wrap">
       <div>{{json}}</div>
     </div>
-
-
   </div>
 </template>
 
 <script>
+import Template from "@/components/Template";
 
 export default {
   name: 'JSON',
   data() {
     return {
-      json: [],
+      json: Template.data().json,
     };
   },
   methods:{
@@ -33,6 +32,7 @@ export default {
   },
   beforeMount() {
     this.getJsonData()
-  }
+  },
+
 }
 </script>

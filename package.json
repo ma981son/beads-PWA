@@ -12,6 +12,8 @@
     "@quasar/extras": "^1.0.0",
     "core-js": "^3.6.5",
     "jquery": "^3.6.0",
+    "mit": "^0.1.3",
+    "mitt": "^3.0.0",
     "quasar": "^2.0.0",
     "register-service-worker": "^1.7.1",
     "vue": "^3.0.0",

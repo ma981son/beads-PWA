@@ -1,6 +1,6 @@
 <template>
   <div id="prop-panel-container">
-    <div class="q-pa-md row items-center content-center q-gutter-sm wrap">
+    <div class="q-pa-md row items-center content-center q-gutter-sm no-wrap">
 
       <div class="col-6">
       <q-card class="my-card">
@@ -11,7 +11,7 @@
         <q-separator ></q-separator>
 
         <div class="q-ml-md row">
-          <q-select color="purple-12" v-model="model" :options="options" label="Stitch" model-value="Brick">
+          <q-select color="purple-12" v-model="model" :options="options" label="Stitch" model-value="Brick"  @update:model-value="stitchEvent(model)">
             <template v-slot:prepend>
               <q-icon name="view_comfy" class="material-icons" />
             </template>
@@ -21,7 +21,7 @@
 
         <div class="q-ml-md row">
           <div class="col">
-            <q-input class="intputs" color="purple-12" v-model.number="length" type="number" label="Length">
+            <q-input class="intputs" color="purple-12" v-model.number="length" type="number" label="Length" v-on:change="lengthEvent">
               <template v-slot:prepend>
                 <q-icon name="swap_vertical_circle" class="material-icons" />
               </template>
@@ -35,7 +35,7 @@
 
         <div class="q-ml-md row">
           <div class="col">
-            <q-input class="intputs" color="purple-12" v-model.number="width" type="number" label="Width">
+            <q-input class="intputs" color="purple-12" v-model.number="width" type="number" label="Width" v-on:change="emitEvent">
               <template v-slot:prepend>
                 <q-icon name="swap_horizontal_circle" class="material-icons" />
               </template>
@@ -101,6 +101,17 @@ let widthTemp = 20
 
 export default {
   name: 'PropPanel',
+  methods: {
+    emitEvent () {
+      this.eventBus.emit("WIDTH_CHANGED",this.width)
+    },
+    lengthEvent () {
+      this.eventBus.emit("LENGTH_CHANGED", this.length)
+    },
+    stitchEvent (model) {
+      this.eventBus.emit("STITCH_CHANGED", model)
+    }
+  },
   setup () {
     return {
       model: ref(null),
@@ -136,6 +147,7 @@ export default {
   text-align: center;
 }
 .my-card {
+  height: 1vh;
 
 }
 

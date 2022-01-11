@@ -30,6 +30,7 @@
 
 import $ from 'jquery'
 
+
 class Grd {
   constructor(length,width,stitch) {
     this.length = length;
@@ -37,24 +38,37 @@ class Grd {
     this.stitch = stitch;
     this.beadValue = Array.from(Array(length), () => new Array(width));
   }
-  fill(json){
-    let index = 0;
+  fill(){
+let rgb = new Object();
+rgb.r = 196;
+rgb.g = 196;
+rgb.b = 196;
     for(let row=0; row<this.length; row++){
       for(let col=0; col<this.width; col++){
-        this.beadValue[row][col] = (json[index].bead.color);
-        index++
+        this.beadValue[row][col] = (rgb);
       }
     }
   }
 }
 
 let grid = new Grd(20,20,'Brick')
+let gridJson = new Object();
+
 
 function updateGrid(grid) {
   console.log("Updating Template")
+  gridJson.temp = {}
+  gridJson.temp.length = grid.length
+  gridJson.temp.width = grid.width
+  gridJson.temp.stitch = grid.stitch
+  gridJson.temp.beads = []
+  console.log(gridJson)
   for (let row=0; row<grid.length; row++){
     for(let col=0; col<grid.width; col++){
       let bead = grid.beadValue[row][col]
+      gridJson.temp.beads.row = row
+      gridJson.temp.beads.col = col
+      gridJson.temp.beads.bead = bead
       $("#beadR"+row+"C"+col).css('background-color', rgbToHex(bead.r,bead.g,bead.b))
     }
   }
@@ -73,6 +87,7 @@ function registerClickListener() {
   }
   $("#fill").click(function (){fillTemplate()})
 }
+
 
 function fillTemplate(){
   console.log("Setting Template to ");
@@ -104,68 +119,61 @@ function loadJson() {
   $.getJSON("http://localhost:9000/json", function (data){
 
     console.log('DATA:',data)
-    grid = new Grd(data.temp.length,data.temp.width,data.temp.stitch)
-    grid.fill(data.temp.beads)
+    grid = new Grd(grid.length,grid.width,grid.stitch)
+    grid.fill(gridJson.temp.beads)
     updateGrid(grid);
     console.log('GRID',grid);
     registerClickListener();
+
     return grid
   })
 }
 
 loadJson()
 
-
-
-
 export default {
   name: 'Template',
   data: function () {
-    /*class Grd {
-      constructor(length,width,stitch) {
-        this.length = length;
-        this.width = width;
-        this.stitch = stitch;
-        this.beadValue = Array.from(Array(length), () => new Array(width));
-      }
-      fill(json){
-        let index = 0;
-        for(let row=0; row<this.length; row++){
-          for(let col=0; col<this.width; col++){
-            this.beadValue[row][col] = (json[index].bead.color);
-            index++
-          }
-        }
-      }
-    }
-
-    let grid = new Grd(20,20,'Brick')
-
-    $.getJSON("http://localhost:9000/json", function (data){
-
-      console.log('DATA:',data)
-      grid = new Grd(data.temp.length,data.temp.width,data.temp.stitch)
-      grid.fill(data.temp.beads)
-      updateGrid(grid);
-      console.log('GRID',grid);
-      registerClickListener();
-    })*/
-
-    loadJson()
-
-    return{beads:grid}
+    grid.fill()
+    updateGrid(grid)
+    console.log(grid)
+    return{
+      beads:grid,
+      json:gridJson}
+  },
+  mounted() {
+    this.eventBus.on('WIDTH_CHANGED',(args) => {
+      grid = new Grd(grid.length,args,grid.stitch)
+      grid.fill()
+      updateGrid(grid)
+      this.beads = grid
+      loadJson()
+    })
+    this.eventBus.on('LENGTH_CHANGED',(args) => {
+      grid = new Grd(args,grid.width,grid.stitch)
+      grid.fill()
+      updateGrid(grid)
+      this.beads = grid
+      loadJson()
+    })
+    this.eventBus.on('STITCH_CHANGED',(args) => {
+      grid = new Grd(grid.length,grid.width,args)
+      grid.fill()
+      updateGrid(grid)
+      this.beads = grid
+      loadJson()
+    })
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
-@media (min-width: 400px) {
+@media (min-width: 150px) {
 
   .bead {
-    width: 0.75em;
-    height: 1.125em;
+    width: 1vw;
+    height: 10px;
     font-size: 10px;
     margin: 0;
     display: inline-flex;
@@ -173,8 +181,8 @@ export default {
   }
 
   .emptyBead {
-    width: 0.75em;
-    height: 1.125em;
+    width: 1vw;
+    height: 1vh;
     margin: 0;
     display: inline-flex;
     font-size: 10px;
@@ -184,6 +192,8 @@ export default {
     outline: none;
   }
 }
+
+
 
 @media (min-width: 480px) {
 
