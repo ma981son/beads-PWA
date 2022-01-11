@@ -35,7 +35,7 @@
 
         <div class="q-ml-md row">
           <div class="col">
-            <q-input class="intputs" color="purple-12" v-model.number="width" type="number" label="Width" v-on:change="emitEvent">
+            <q-input class="intputs" color="purple-12" v-model.number="width" type="number" label="Width" v-on:change="emitEvent; widthinput(this.size);">
               <template v-slot:prepend>
                 <q-icon name="swap_horizontal_circle" class="material-icons" />
               </template>
@@ -61,7 +61,7 @@
           <q-separator ></q-separator>
 
           <div class="q-pa-md row justify-center">
-            <q-select color="purple-12" v-model="size" :options="sizeOptions" label="Size" model-value='11/0'>
+            <q-select color="purple-12" v-model="size" emit-value :options="sizeOptions" label="Size"  model-value='11/0' @update:model-value="widthinput(size)">
               <template v-slot:prepend>
                 <q-icon name="auto_awesome" class="material-icons" />
               </template>
@@ -95,9 +95,22 @@
 <script>
 
 import {ref} from 'vue'
+import Template from "@/components/Template";
 
-let lenghtTemp = 20
-let widthTemp = 20
+let lenghtTemp = Template.data().length
+let widthTemp = Template.data().width
+
+let sizemap = new Map();
+sizemap.set("6/0", 0.4)
+sizemap.set("7/0", 0.35)
+sizemap.set("8/0", 0.3)
+sizemap.set("9/0", 0.26)
+sizemap.set("10/0", 0.24)
+sizemap.set("11/0", 0.22)
+sizemap.set("12/0", 0.2)
+sizemap.set("15/0", 0.15)
+
+
 
 export default {
   name: 'PropPanel',
@@ -110,22 +123,29 @@ export default {
     },
     stitchEvent (model) {
       this.eventBus.emit("STITCH_CHANGED", model)
+    },
+    widthinput(size){
+      this.widthCm = this.width * sizemap.get(size) + "cm"
+      this.lengthCm = this.length * sizemap.get(size) + "cm"
     }
   },
+
   setup () {
+
     return {
       model: ref(null),
       options: [
         'Brick', 'Square'
       ],
+      size: ref('11/0'),
+      sizeOptions: [
+        '6/0','7/0','8/0','9/0','10/0','11/0','12/0','15/0'
+      ],
       length: ref(lenghtTemp),
       lengthCm: ref("4.4cm"),
       width: ref(widthTemp),
       widthCm: ref("4.4cm"),
-      size: ref('11/0'),
-      sizeOptions: [
-          '6/0','7/0','8/0','9/0','10/0','11/0','12/0','15/0'
-      ],
+
       hex: ref('#FF00FF')
     }
   }

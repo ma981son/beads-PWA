@@ -120,7 +120,7 @@ function loadJson() {
 
     console.log('DATA:',data)
     grid = new Grd(grid.length,grid.width,grid.stitch)
-    grid.fill(gridJson.temp.beads)
+    grid.fill()
     updateGrid(grid);
     console.log('GRID',grid);
     registerClickListener();
@@ -139,7 +139,9 @@ export default {
     console.log(grid)
     return{
       beads:grid,
-      json:gridJson}
+      json:gridJson,
+    length:grid.length,
+    width:grid.width}
   },
   mounted() {
     this.eventBus.on('WIDTH_CHANGED',(args) => {
