@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Json from "@/views/Json";
 
+
 const routes = [
   {
     path: '/',
@@ -20,7 +21,19 @@ const routes = [
     path: '/json',
     name: 'Json',
     component: Json
-  }
+  },
+  {
+    path: "/register",
+    component: () => import("../views/Register.vue"),
+  },
+  {
+    path: "/sign-in",
+    component: () => import("../views/SignIn.vue"),
+  },
+  {
+    path: "/feed",
+    component: () => import("../views/Feed.vue"),
+  },
 ]
 
 const router = createRouter({
