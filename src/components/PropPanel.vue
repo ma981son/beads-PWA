@@ -21,21 +21,21 @@
 
         <div class="q-ml-md row">
           <div class="col">
-            <q-input class="intputs" color="purple-12" v-model.number="length" type="number" label="Length" v-on:change="lengthEvent">
+            <q-input class="intputs" color="purple-12" v-model.number="length" type="number" label="Length" v-on:change="lengthEvent();widthinput(this.size);">
               <template v-slot:prepend>
                 <q-icon name="swap_vertical_circle" class="material-icons" />
               </template>
             </q-input>
           </div>
           <div class="q-ml-md q-mr-md col">
-            <q-input class="intputs" input-class="text-right" color="purple-12" v-model="lengthCm" label="" :dense="dense" readonly>
+            <q-input class="intputs" input-class="text-right" color="purple-12" v-model="lengthCm" readonly>
             </q-input>
           </div>
         </div>
 
         <div class="q-ml-md row">
           <div class="col">
-            <q-input class="intputs" color="purple-12" v-model.number="width" type="number" label="Width" v-on:change="emitEvent; widthinput(this.size);">
+            <q-input class="intputs" color="purple-12" v-model.number="width" type="number" label="Width" v-on:change="widthEvent(); widthinput(this.size);">
               <template v-slot:prepend>
                 <q-icon name="swap_horizontal_circle" class="material-icons" />
               </template>
@@ -115,7 +115,7 @@ sizemap.set("15/0", 0.15)
 export default {
   name: 'PropPanel',
   methods: {
-    emitEvent () {
+    widthEvent () {
       this.eventBus.emit("WIDTH_CHANGED",this.width)
     },
     lengthEvent () {
@@ -158,7 +158,6 @@ export default {
   height: 100%;
   width: 100%;
   display: inline-flex;
-  margin: 16px 0;
   align-items: center;
   justify-content: center;
   font-size: 0;

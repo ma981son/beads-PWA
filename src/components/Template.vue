@@ -1,5 +1,5 @@
 <template>
-  <div class="templateContainer" id="temp">
+  <div class="templateContainer" id="temp" style="margin-top: 3vh; margin-bottom: 2.2vh">
     <div class="template">
       <template v-if="beads.stitch === 'Brick'">
         <div v-for="(n, i) in beads.length" :key="n">
@@ -273,7 +273,6 @@ export default {
   height: 100%;
   width: 100%;
   display: inline-flex;
-  margin: 16px 0;
   align-items: center;
   justify-content: center;
   font-size: 0;

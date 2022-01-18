@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md">
+  <div class="q-pa-md" style="max-width: 2500px; margin-right: auto; margin-left: auto">
     <q-layout>
       <q-header elevated class="$primary" >
         <q-toolbar class="text-black">
@@ -9,11 +9,27 @@
           <q-route-tab name="tab1" label="Home"  to="/"/>
           <q-route-tab name="tab2" label="About" to="/about"/>
           <q-route-tab name="tab3" label="Json" to="/json"/>
+          <q-route-tab name="tab4" label="Feed" to="/feed"/>
+          <span v-if="isLoggedIn">
+            <q-btn flat round dense @click="signOut" class="bg-secondary q-mr-sm q-ml-sm" icon="logout">
+              <q-tooltip class="bg-secondary text-black">Logout</q-tooltip>
+          </q-btn>
+          </span>
+          <span v-else>
+            <q-tabs v-model="tab" shrink>
+              <q-btn to="/register" flat round dense class="bg-accent q-mr-sm q-ml-sm" icon="app_registration">
+                <q-tooltip class="bg-accent text-black">Create Account</q-tooltip>
+              </q-btn>
+              <q-btn to="/sign-in" flat round dense class="bg-secondary q-mr-sm q-ml-sm" icon="login">
+                <q-tooltip class="bg-secondary text-black">Login</q-tooltip>
+              </q-btn>
+            </q-tabs>
+          </span>
         </q-tabs>
 
         </q-toolbar>
         <q-toolbar class="text-black">
-          <q-toolbar-title class="q-ml-sm">
+          <q-toolbar-title class="q-ml-md">
 
             <strong>HTWG</strong> Beads
             <q-avatar>
@@ -21,22 +37,12 @@
             </q-avatar>
           </q-toolbar-title>
           <q-space />
-          <q-btn flat round dense icon="file_download" class="material-icons" />
-          <q-btn flat round dense icon="add" class="material-icons" />
-
-          <nav>
-            <router-link to="/"> Home </router-link> |
-            <router-link to="/feed"> Feed </router-link> |
-            <span v-if="isLoggedIn"
-            >
-        <button @click="signOut">Logout</button>
-      </span>
-            <span v-else>
-        <router-link to="/register"> Register </router-link> |
-        <router-link to="/sign-in"> Login </router-link>
-      </span>
-          </nav>
-
+          <q-btn flat round dense icon="file_download" class="material-icons q-mr-sm q-ml-sm">
+            <q-tooltip class="">Save Design</q-tooltip>
+          </q-btn>
+          <q-btn flat round dense icon="add" class="material-icons q-mr-sm q-ml-sm">
+            <q-tooltip class="">Load Design</q-tooltip>
+          </q-btn>
         </q-toolbar>
       </q-header>
 
