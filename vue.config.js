@@ -7,6 +7,9 @@ module.exports = {
         manifestOptions: {
             background_color: "#42b983"
         },
+        workboxOptions: {
+            navigateFallback: 'index.html'
+        },
         iconPaths: {
             favicon32: 'img/icons/flower.png',
             favicon16: 'img/icons/flower.png',

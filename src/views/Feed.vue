@@ -1,24 +1,13 @@
 <template>
   <h3>This page is for users only</h3>
 
-    <div class="home">
-      <Template></Template>
-    </div>
-    <div>
-      <PropPanel></PropPanel>
-    </div>
-
 </template>
 
 <script>
-import Template from '@/components/Template.vue'
-import PropPanel from "@/components/PropPanel";
 
 export default {
   name: 'Feed',
   components: {
-    Template,
-    PropPanel
   }
 }
 </script>
